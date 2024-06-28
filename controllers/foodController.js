@@ -20,4 +20,28 @@ const addFood = async (req , res)=>{
     }
 }
 
-export {addFood}
+// ! all food list
+const listFood = async (req, res) => {
+    try{
+        const foods = await foodModel.find({});
+        res.status(200).json({success:true,data:foods});
+    }catch(err){
+        res.status(400).json({success:false,message:err.message});
+    }
+}
+
+// ! delete food item
+const deleteFood = async (req,res) => {
+    try{
+        const food = await foodModel.findByIdAndDelete(req.body.id);
+        if(!food){
+            return res.status(404).json({success:false, message: 'Food not found'});
+        }
+        fs.unlinkSync(`uploads/${food.image}`);
+        res.status(200).json({success:true, message: 'Food deleted successfully'});
+    }catch(err){
+        res.status(400).json({success:false, message: err.message});
+    }
+}
+
+export {addFood , listFood , deleteFood}
