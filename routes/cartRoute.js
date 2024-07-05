@@ -8,6 +8,6 @@ cartRouter.post('/add',authMiddleware, addToCart);
 
 cartRouter.get('/get', authMiddleware,getCart);
 
-cartRouter.delete('/remove', authMiddleware,removeFromCart);
+cartRouter.post('/remove', authMiddleware,removeFromCart);
 
 export default cartRouter;
