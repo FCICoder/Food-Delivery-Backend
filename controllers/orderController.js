@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // !placing user order for frontend
 const placeOrder = async (req , res)=> {
-    const frontend_url = 'https://localhost:5173';
+    const frontend_url = 'https://localhost:5174';
     try{
         const newOrder = new orderModel({
             userId: req.body.userId,
@@ -73,4 +73,38 @@ const verifyOrder = async(req , res)=>{
     }
 }
 
-export {placeOrder , verifyOrder}
+//! user orders for frontend
+const userOrders = async (req, res) => {
+    try{
+        const orders = await orderModel.find({userId:req.body.userId});
+        res.json({success: true, data:orders});
+    }catch(err){
+        console.log(err.message);
+        res.status(500).json({success: false, message: "Server Error"});
+    }
+}
+
+// ! Listing orders for admin pannel
+const listOrders =async (req, res) => {
+    try{
+        const orders = await orderModel.find({}).populate('userId');
+        res.json({success: true, data: orders});
+    }catch(err){
+        console.log(err.message);
+        res.status(500).json({success: false, message: "Server Error"});
+    }
+}
+
+// ! updating order status for admin pannel
+
+const updateStatus = async (req, res) => {
+    try{
+        const order = await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status});
+        res.json({success: true, message: "Order updated"});
+    }catch(err){
+        console.log(err.message);
+        res.status(500).json({success: false, message: "Server Error"});
+    }
+}
+
+export {placeOrder , verifyOrder , userOrders , listOrders , updateStatus }
