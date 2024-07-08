@@ -1,18 +1,24 @@
 import express from 'express';
 import cors from 'cors';
-import { connectDB } from './config/db.js';
 import foodRouter from './routes/foodRoute.js';
 import userRouter from './routes/userRoute.js';
 import 'dotenv/config'
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
+import { connectString } from './config/db.js';
+import mongoose from 'mongoose';
+
+
 //! App Configuration
 const app = express();
 const port = 3333;
 
 //! Middlewares
 app.use(cors({
-    origin:'*'
+    origin:'*',
+    credentials: true,
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
 //! Routes
@@ -28,8 +34,14 @@ app.use('/api/cart',cartRouter);
 app.use('/api/order',orderRouter);
 
 //! Db Connection
-connectDB();
 
+
+
+mongoose.connect(connectString).then(()=>{
+    console.log('Conected to Mongo DB Successefully');
+}).catch((err)=>{
+    console.log(err);
+})
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
