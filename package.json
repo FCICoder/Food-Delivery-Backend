@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "postinstall": "npm rebuild"
   },
   "author": "",
   "license": "ISC",
