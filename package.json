@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
-  "engines": {"node": "14x"},
+  "engines": {"node": "20.x"},
   "type": "module",
   "scripts": {
     "start" : "node index.js"
