@@ -8,7 +8,7 @@ import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 //! App Configuration
 const app = express();
-const port = 4000;
+const port = 3333;
 
 //! Middlewares
 app.use(cors({
