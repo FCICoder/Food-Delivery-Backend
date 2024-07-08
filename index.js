@@ -21,6 +21,13 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
+app.options('',cors({
+    origin:'*',
+    credentials: true,
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}))
+
 //! Routes
 app.get('/', (req , res) =>{
     res.send('Api Working');
